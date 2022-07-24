@@ -26,8 +26,8 @@ public class Category {
     // REQUIRES:
     // MODIFIES: this
     // EFFECTS: calculates how much money should be spent in category based off income
-    public double moneyAvailableInCategory(Income income) {
-        return remainingMoney = income.getMoney() * this.percent;
+    public double updateMoneyAvailableInCategory(User user) {
+        return this.remainingMoney = user.getIncome() * this.percent;
     }
 
     // REQUIRES:
@@ -35,8 +35,7 @@ public class Category {
     // EFFECTS: calculates how much money left in category
     // Available - spent
     public double moneyRemainingInCategory() {
-        return 10;
-
+        return this.remainingMoney -= this.totalSpent;
     }
 
     // REQUIRES:
@@ -59,16 +58,12 @@ public class Category {
     // REQUIRES:
     // MODIFIES: this
     // EFFECTS: produces true if purchase successfully added to list
-    public Boolean addPurchase(Purchase purchase) {
-        if (listPurchases.contains(purchase)) {
-            return false;
-        } else {
-            listPurchases.add(purchase);
-            return true;
-        }
+    public String addPurchase(Purchase purchase) {
+        listPurchases.add(purchase);
+        return "Purchase successfully added.";
     }
 
-    // REQUIRES:
+    // REQUIRES: purchase list cannot be empty
     // MODIFIES:
     // EFFECTS: produces true if purchase successfully removed from list
     public Boolean removePurchase(Purchase purchase) {
@@ -80,22 +75,22 @@ public class Category {
         }
     }
 
-    // REQUIRES:
-    // MODIFIES:
-    // EFFECTS: returns message for add purchase
-    public String feedbackAddPurchase(boolean addSuccess) {
-        if (success) {
-            return "Purchase successfully added";
-        } else {
-            return "Unable to successfully add purchase.";
-        }
-    }
+//    // REQUIRES:
+//    // MODIFIES:
+//    // EFFECTS: returns message for add purchase
+//    public String feedbackAddPurchase(boolean addSuccess) {
+//        if (addSuccess) {
+//            return "Purchase successfully added";
+//        } else {
+//            return "Unable to successfully add purchase.";
+//        }
+//    }
 
     // REQUIRES:
     // MODIFIES:
     // EFFECTS: returns message for remove purchase
     public String feedbackRemovePurchase(boolean removeSuccess) {
-        if (success) {
+        if (removeSuccess) {
             return "Purchase successfully removed";
         } else {
             return "Unable to successfully remove purchase.";
@@ -104,6 +99,22 @@ public class Category {
 
     public String getName() {
         return this.name;
+    }
+
+    public double getRemainingMoney() {
+        return remainingMoney;
+    }
+
+    public int getPercent() {
+        return percent;
+    }
+
+    public List<Purchase> getListPurchases() {
+        return listPurchases;
+    }
+
+    public double getTotalSpent() {
+        return totalSpent;
     }
 
 }

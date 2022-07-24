@@ -9,7 +9,7 @@ public class Purchase {
     // REQUIRES:
     // MODIFIES:
     // EFFECTS:
-    public Purchase(String name, int cost) {
+    public Purchase(String name, double cost) {
         this.name = name;
         this.cost = cost;
     }
@@ -18,7 +18,7 @@ public class Purchase {
     // MODIFIES: this
     // EFFECTS: produces true if name successfully added, false otherwise
     public Boolean editPurchase(Purchase purchase, String name) {
-        if (name != null) {
+        if (name != "") {
             this.name = name;
             return true;
         } else {
