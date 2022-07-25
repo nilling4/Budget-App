@@ -17,23 +17,23 @@ public class Purchase {
     // REQUIRES: new name cannot be ""
     // MODIFIES: this
     // EFFECTS: produces true if name successfully added, false otherwise
-    public Boolean editPurchase(Purchase purchase, String name) {
-        if (name != "") {
+    public String editPurchase(String name) {
+        if (name != null) {
             this.name = name;
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    // EFFECTS: produces edit feedback message
-    public String editFeedback(boolean feedback) {
-        if (feedback) {
             return "Purchase was successfully edited.";
         } else {
             return "Error: Purchase could not be edited.";
         }
     }
+
+//    // EFFECTS: produces edit feedback message
+//    public String editFeedback(boolean feedback) {
+//        if (feedback) {
+//            return "Purchase was successfully edited.";
+//        } else {
+//            return "Error: Purchase could not be edited.";
+//        }
+//    }
 
     public String getName() {
         return name;

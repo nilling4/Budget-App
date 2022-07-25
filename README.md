@@ -16,7 +16,8 @@ weekly, and monthly spending.
 
 ## User Stories 
 
-- As a user, I want to be able to add a recent purchase to its designated spending category
-- As a user, I want to be able to set a daily, weekly, and monthly budget
+- As a user, I want to be able to add recent purchases to their designated spending category/categories
+- As a user, I want to be able to see how much of my total budget I have remaining 
 - As a user, I want to be able to choose how I allocate my budget to each spending category
-- As a user, I want to be able to be able to see all of my purchases in each spending category
+- As a user, I want to be able to be able to rename purchases that I made 
+

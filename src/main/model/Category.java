@@ -10,7 +10,7 @@ public class Category {
     private String name;
     private List<Purchase> listPurchases;
     private boolean success;
-    private int percent;
+    private double percent;
     private double remainingMoney;
     private double totalSpent;
 
@@ -25,9 +25,18 @@ public class Category {
 
     // REQUIRES:
     // MODIFIES: this
+    // EFFECTS: updates category method with purchases and money spent
+    public void updateCategory(User user) {
+        updateMoneyAvailableInCategory(user);
+        moneySpentInCategory();
+        moneyRemainingInCategory();
+    }
+
+    // REQUIRES:
+    // MODIFIES: this
     // EFFECTS: calculates how much money should be spent in category based off income
     public double updateMoneyAvailableInCategory(User user) {
-        return this.remainingMoney = user.getIncome() * this.percent;
+        return this.remainingMoney = user.getIncome() * this.percent / 100;
     }
 
     // REQUIRES:
@@ -48,12 +57,12 @@ public class Category {
         return totalSpent;
     }
 
-    // REQUIRES:
-    // MODIFIES: this
-    // EFFECTS: adds the cost of a purchase to the total spent
-    public double addPurchaseAmount(Purchase purchase) {
-        return this.totalSpent += purchase.getCost();
-    }
+//    // REQUIRES:
+//    // MODIFIES: this
+//    // EFFECTS: adds the cost of a purchase to the total spent
+//    public double addPurchaseAmount(Purchase purchase) {
+//        return this.totalSpent += purchase.getCost();
+//    }
 
     // REQUIRES:
     // MODIFIES: this
@@ -65,13 +74,13 @@ public class Category {
 
     // REQUIRES: purchase list cannot be empty
     // MODIFIES:
-    // EFFECTS: produces true if purchase successfully removed from list
-    public Boolean removePurchase(Purchase purchase) {
+    // EFFECTS: produces success if purchase successfully removed from list
+    public String removePurchase(Purchase purchase) {
         if (listPurchases.contains(purchase)) {
             listPurchases.remove(purchase);
-            return true;
+            return "Purchase successfully removed";
         } else {
-            return false;
+            return "Unable to successfully remove purchase.";
         }
     }
 
@@ -86,16 +95,16 @@ public class Category {
 //        }
 //    }
 
-    // REQUIRES:
-    // MODIFIES:
-    // EFFECTS: returns message for remove purchase
-    public String feedbackRemovePurchase(boolean removeSuccess) {
-        if (removeSuccess) {
-            return "Purchase successfully removed";
-        } else {
-            return "Unable to successfully remove purchase.";
-        }
-    }
+//    // REQUIRES:
+//    // MODIFIES:
+//    // EFFECTS: returns message for remove purchase
+//    public String feedbackRemovePurchase(boolean removeSuccess) {
+//        if (removeSuccess) {
+//            return "Purchase successfully removed";
+//        } else {
+//            return "Unable to successfully remove purchase.";
+//        }
+//    }
 
     public String getName() {
         return this.name;
@@ -105,7 +114,7 @@ public class Category {
         return remainingMoney;
     }
 
-    public int getPercent() {
+    public double getPercent() {
         return percent;
     }
 

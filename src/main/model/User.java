@@ -17,24 +17,24 @@ public class User {
     // REQUIRES: amount > 0
     // MODIFIES: this
     // EFFECTS: Increases money by amount
-    public Boolean increaseMoney(double amount) {
+    public String increaseMoney(double amount) {
         if (amount > 0) {
             this.income += amount;
-            return true;
+            return "money increased by: " + amount;
         } else {
-            return false;
+            return "money could not be increased";
         }
     }
 
     // REQUIRES: money - amount > ultimateSpent
     // MODIFIES: this
     // EFFECTS: decreases money by amount
-    public Boolean decreaseMoney(double amount, Graph graph) {
+    public String decreaseMoney(double amount, Graph graph) {
         if (this.income - amount > graph.getUltimateSpent()) {
             this.income -= amount;
-            return true;
+            return "money decreased by: " + amount;
         } else {
-            return false;
+            return "money could not be decreased";
         }
     }
 
