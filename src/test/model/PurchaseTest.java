@@ -32,7 +32,7 @@ public class PurchaseTest {
     @Test
     public void testEditPurchaseFailure() {
         assertEquals("Error: Purchase could not be edited.",
-                hotDog.editPurchase(null));
+                hotDog.editPurchase("Hot Dog"));
         assertEquals("Hot Dog", hotDog.getName());
     }
 

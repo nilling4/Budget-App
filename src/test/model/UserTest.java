@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class UserTest {
     private User noel;
-    private double income;
     private Graph testGraph;
 
     @BeforeEach

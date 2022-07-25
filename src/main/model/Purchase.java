@@ -4,7 +4,6 @@ package model;
 public class Purchase {
     private String name;
     private double cost;
-    private boolean feedback;
 
     // REQUIRES:
     // MODIFIES:
@@ -18,7 +17,7 @@ public class Purchase {
     // MODIFIES: this
     // EFFECTS: produces true if name successfully added, false otherwise
     public String editPurchase(String name) {
-        if (name != null) {
+        if (name != this.name) {
             this.name = name;
             return "Purchase was successfully edited.";
         } else {
