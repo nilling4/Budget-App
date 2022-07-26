@@ -5,9 +5,7 @@ public class Purchase {
     private String name;
     private double cost;
 
-    // REQUIRES:
-    // MODIFIES:
-    // EFFECTS:
+    // EFFECTS: creates a new purchase object with a name and cost
     public Purchase(String name, double cost) {
         this.name = name;
         this.cost = cost;
@@ -24,15 +22,6 @@ public class Purchase {
             return "Error: Purchase could not be edited.";
         }
     }
-
-//    // EFFECTS: produces edit feedback message
-//    public String editFeedback(boolean feedback) {
-//        if (feedback) {
-//            return "Purchase was successfully edited.";
-//        } else {
-//            return "Error: Purchase could not be edited.";
-//        }
-//    }
 
     public String getName() {
         return name;

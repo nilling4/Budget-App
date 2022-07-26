@@ -47,6 +47,12 @@ public class UserTest {
     }
 
     @Test
+    public void testRenameUser() {
+        noel.renameUser("Henry");
+        assertEquals("Henry", noel.getName());
+    }
+
+    @Test
     public void testGetName() {
         assertEquals("Noel", noel.getName());
     }

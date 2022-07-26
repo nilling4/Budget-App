@@ -21,25 +21,24 @@ public class Category {
         this.name = name;
         this.percent = percent;
         this.remainingMoney = 0;
+        this.totalSpent = 0;
     }
 
-    // REQUIRES:
     // MODIFIES: this
     // EFFECTS: updates category method with purchases and money spent
     public void updateCategory(User user) {
+        resetTotalSpent();
         updateMoneyAvailableInCategory(user);
         moneySpentInCategory();
         moneyRemainingInCategory();
     }
 
-    // REQUIRES:
     // MODIFIES: this
     // EFFECTS: calculates how much money should be spent in category based off income
     public double updateMoneyAvailableInCategory(User user) {
         return this.remainingMoney = user.getIncome() * this.percent / 100;
     }
 
-    // REQUIRES:
     // MODIFIES: this
     // EFFECTS: calculates how much money left in category
     // Available - spent
@@ -47,7 +46,6 @@ public class Category {
         return this.remainingMoney -= this.totalSpent;
     }
 
-    // REQUIRES:
     // MODIFIES: this
     // EFFECTS: adds the total cost from all purchases in category
     public double moneySpentInCategory() {
@@ -57,14 +55,12 @@ public class Category {
         return totalSpent;
     }
 
-//    // REQUIRES:
-//    // MODIFIES: this
-//    // EFFECTS: adds the cost of a purchase to the total spent
-//    public double addPurchaseAmount(Purchase purchase) {
-//        return this.totalSpent += purchase.getCost();
-//    }
+    // MODIFIES: this
+    // EFFECTS: resets total spent field
+    public double resetTotalSpent() {
+        return this.totalSpent = 0;
+    }
 
-    // REQUIRES:
     // MODIFIES: this
     // EFFECTS: produces true if purchase successfully added to list
     public String addPurchase(Purchase purchase) {
@@ -83,28 +79,6 @@ public class Category {
             return "Unable to successfully remove purchase.";
         }
     }
-
-//    // REQUIRES:
-//    // MODIFIES:
-//    // EFFECTS: returns message for add purchase
-//    public String feedbackAddPurchase(boolean addSuccess) {
-//        if (addSuccess) {
-//            return "Purchase successfully added";
-//        } else {
-//            return "Unable to successfully add purchase.";
-//        }
-//    }
-
-//    // REQUIRES:
-//    // MODIFIES:
-//    // EFFECTS: returns message for remove purchase
-//    public String feedbackRemovePurchase(boolean removeSuccess) {
-//        if (removeSuccess) {
-//            return "Purchase successfully removed";
-//        } else {
-//            return "Unable to successfully remove purchase.";
-//        }
-//    }
 
     public String getName() {
         return this.name;

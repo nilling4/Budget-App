@@ -6,11 +6,15 @@ public class User {
     private double income;
     private String name;
 
-    // REQUIRES:
-    // MODIFIES:
     // EFFECTS: creates a new user
     public User(double income, String name) {
         this.income = income;
+        this.name = name;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: renames a user
+    public void renameUser(String name) {
         this.name = name;
     }
 

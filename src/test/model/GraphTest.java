@@ -73,6 +73,12 @@ public class GraphTest {
     }
 
     @Test
+    public void testResetUltimateSpent() {
+        testGraph.resetUltimateSpent();
+        assertEquals(0, testGraph.getUltimateSpent());
+    }
+
+    @Test
     public void testUltimateSpentMessage() {
         transportCategory.addPurchase(bike);
         transportCategory.updateCategory(noel);

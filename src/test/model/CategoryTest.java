@@ -54,6 +54,16 @@ class CategoryTest {
     }
 
     @Test
+    public void testResetTotalSpent() {
+        foodCategory.addPurchase(hotDog);
+        foodCategory.updateCategory(noel);
+        foodCategory.resetTotalSpent();
+        foodCategory.addPurchase(burger);
+        foodCategory.updateCategory(noel);
+        assertEquals(14.0, foodCategory.getRemainingMoney());
+    }
+
+    @Test
     public void testMoneySpentInCategory() {
         foodCategory.addPurchase(burger);
         foodCategory.addPurchase(hotDog);
