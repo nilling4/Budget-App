@@ -1,7 +1,10 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 // Represents an item purchased with a name and cost
-public class Purchase {
+public class Purchase implements Writable {
     private String name;
     private double cost;
 
@@ -29,5 +32,13 @@ public class Purchase {
 
     public double getCost() {
         return cost;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("cost", cost);
+        return json;
     }
 }

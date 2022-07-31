@@ -1,7 +1,10 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 // Represents users income
-public class User {
+public class User implements Writable {
 
     private double income;
     private String name;
@@ -50,4 +53,11 @@ public class User {
         return name;
     }
 
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("income", income);
+        json.put("name", name);
+        return json;
+    }
 }
