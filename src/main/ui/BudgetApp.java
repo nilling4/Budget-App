@@ -17,7 +17,8 @@ public class BudgetApp {
     private static final String JSON_STORE_CATEGORY_1 = "./data/category1.json";
     private static final String JSON_STORE_CATEGORY_2 = "./data/category2.json";
     private static final String JSON_STORE_CATEGORY_3 = "./data/category3.json";
-    private static final String JSON_STORE_USER = "./data/category1.json";
+    private static final String JSON_STORE_GRAPH = "./data/graph.json";
+    private static final String JSON_STORE_USER = "./data/user.json";
     private Graph mainGraph;
     private User mainUser;
     private Category category1;
@@ -30,6 +31,8 @@ public class BudgetApp {
     private JsonReader jsonReaderCategory2;
     private JsonWriter jsonWriterCategory3;
     private JsonReader jsonReaderCategory3;
+    private JsonWriter jsonWriterGraph;
+    private JsonReader jsonReaderGraph;
     private JsonWriter jsonWriterUser;
     private JsonReader jsonReaderUser;
 
@@ -49,6 +52,8 @@ public class BudgetApp {
         jsonReaderCategory2 = new JsonReader(JSON_STORE_CATEGORY_2);
         jsonWriterCategory3 = new JsonWriter(JSON_STORE_CATEGORY_3);
         jsonReaderCategory3 = new JsonReader(JSON_STORE_CATEGORY_3);
+        jsonWriterGraph = new JsonWriter(JSON_STORE_GRAPH);
+        jsonReaderGraph = new JsonReader(JSON_STORE_GRAPH);
         jsonWriterUser = new JsonWriter(JSON_STORE_USER);
         jsonReaderUser = new JsonReader(JSON_STORE_USER);
 
@@ -93,11 +98,13 @@ public class BudgetApp {
             saveCategory1();
             saveCategory2();
             saveCategory3();
+            saveGraph();
         } else if (command.equals("l")) {
             loadCategory1();
             loadCategory2();
             loadCategory3();
-            //loadUser();
+            loadUser();
+            loadGraph();
         } else {
             System.out.println("Please select a valid option...");
         }
@@ -435,6 +442,29 @@ public class BudgetApp {
             System.out.println("Loaded " + category3.getName() + " from " + JSON_STORE_CATEGORY_3);
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE_CATEGORY_3);
+        }
+    }
+
+    // EFFECTS: saves graph to file
+    private void saveGraph() {
+        try {
+            jsonWriterGraph.open();
+            jsonWriterGraph.write(mainGraph);
+            jsonWriterGraph.close();
+            System.out.println("Saved " + mainGraph + " to " + JSON_STORE_GRAPH);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE_GRAPH);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads graph from file
+    private void loadGraph() {
+        try {
+            mainGraph = jsonReaderGraph.readGraph();
+            System.out.println("Loaded " + mainGraph + " from " + JSON_STORE_GRAPH);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE_GRAPH);
         }
     }
 
