@@ -108,7 +108,7 @@ public class Category implements Writable {
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("name", name);
-        json.put("listPurchases", listPurchases);
+        json.put("listPurchases", purchasesToJson());
         json.put("percent", percent);
         json.put("remainingMoney", remainingMoney);
         json.put("totalSpent", totalSpent);
@@ -116,7 +116,7 @@ public class Category implements Writable {
     }
 
     // EFFECTS: returns things in this category as a JSON array
-    private JSONArray thingiesToJson() {
+    private JSONArray purchasesToJson() {
         JSONArray jsonArray = new JSONArray();
 
         for (Purchase p : listPurchases) {

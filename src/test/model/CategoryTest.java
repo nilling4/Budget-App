@@ -4,11 +4,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class CategoryTest {
     private Category foodCategory;
+    private List<Purchase> purchases;
     private Purchase hotDog;
     private Purchase burger;
     private User noel;

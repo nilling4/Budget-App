@@ -4,21 +4,56 @@ import model.Category;
 import model.Graph;
 import model.Purchase;
 import model.User;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 // Budget application
 // used the TellerApp as reference for making the UI
 public class BudgetApp {
+    private static final String JSON_STORE_CATEGORY_1 = "./data/category1.json";
+    private static final String JSON_STORE_CATEGORY_2 = "./data/category2.json";
+    private static final String JSON_STORE_CATEGORY_3 = "./data/category3.json";
+    private static final String JSON_STORE_USER = "./data/category1.json";
     private Graph mainGraph;
     private User mainUser;
     private Category category1;
     private Category category2;
     private Category category3;
     private Scanner input;
+    private JsonWriter jsonWriterCategory1;
+    private JsonReader jsonReaderCategory1;
+    private JsonWriter jsonWriterCategory2;
+    private JsonReader jsonReaderCategory2;
+    private JsonWriter jsonWriterCategory3;
+    private JsonReader jsonReaderCategory3;
+    private JsonWriter jsonWriterUser;
+    private JsonReader jsonReaderUser;
 
-    // EFFECTS: runs the budget application
-    public BudgetApp() {
+    // EFFECTS: constructs user and categories then runs the budget application
+    public BudgetApp() throws FileNotFoundException {
+        mainGraph = new Graph();
+        mainUser = new User(0, "unnamed");
+        category1 = new Category("Food", 0);
+        category2 = new Category("Transport", 0);
+        category3 = new Category("Fun", 0);
+        mainGraph.addCategory(category1);
+        mainGraph.addCategory(category2);
+        mainGraph.addCategory(category3);
+        jsonWriterCategory1 = new JsonWriter(JSON_STORE_CATEGORY_1);
+        jsonReaderCategory1 = new JsonReader(JSON_STORE_CATEGORY_1);
+        jsonWriterCategory2 = new JsonWriter(JSON_STORE_CATEGORY_2);
+        jsonReaderCategory2 = new JsonReader(JSON_STORE_CATEGORY_2);
+        jsonWriterCategory3 = new JsonWriter(JSON_STORE_CATEGORY_3);
+        jsonReaderCategory3 = new JsonReader(JSON_STORE_CATEGORY_3);
+        jsonWriterUser = new JsonWriter(JSON_STORE_USER);
+        jsonReaderUser = new JsonReader(JSON_STORE_USER);
+
+        input = new Scanner(System.in);
+        input.useDelimiter("\n");
         runBudget();
     }
 
@@ -27,8 +62,7 @@ public class BudgetApp {
     private void runBudget() {
         boolean keepGoing = true;
         String command = null;
-
-        init();
+        input = new Scanner(System.in);
 
         while (keepGoing) {
             displayMenu();
@@ -54,26 +88,36 @@ public class BudgetApp {
             runGraph();
         } else if (command.equals("u")) {
             runUser();
+        } else if (command.equals("s")) {
+            saveUser();
+            saveCategory1();
+            saveCategory2();
+            saveCategory3();
+        } else if (command.equals("l")) {
+            loadCategory1();
+            loadCategory2();
+            loadCategory3();
+            loadUser();
         } else {
             System.out.println("Please select a valid option...");
         }
     }
 
-    // MODIFIES: this
-    // EFFECTS: initializes main
-    private void init() {
-        mainGraph = new Graph();
-        mainUser = new User(0, "unnamed");
-        category1 = new Category("Food", 0);
-        category2 = new Category("Transport", 0);
-        category3 = new Category("Fun", 0);
-        mainGraph.addCategory(category1);
-        mainGraph.addCategory(category2);
-        mainGraph.addCategory(category3);
-
-        input = new Scanner(System.in);
-        input.useDelimiter("\n");
-    }
+//    // MODIFIES: this
+//    // EFFECTS: initializes main
+//    private void init() {
+//        mainGraph = new Graph();
+//        mainUser = new User(0, "unnamed");
+//        category1 = new Category("Food", 0);
+//        category2 = new Category("Transport", 0);
+//        category3 = new Category("Fun", 0);
+//        mainGraph.addCategory(category1);
+//        mainGraph.addCategory(category2);
+//        mainGraph.addCategory(category3);
+//
+//        input = new Scanner(System.in);
+//        input.useDelimiter("\n");
+//    }
 
     // MODIFIES: this
     // EFFECTS: initializes user
@@ -102,6 +146,8 @@ public class BudgetApp {
         System.out.println("\tc -> categories");
         System.out.println("\tg -> graph");
         System.out.println("\tu -> user");
+        System.out.println("\ts -> save to file");
+        System.out.println("\tl -> load from file");
         System.out.println("\tq -> quit");
     }
 
@@ -320,6 +366,98 @@ public class BudgetApp {
         System.out.println(" ");
         for (Purchase purchase : selected.getListPurchases()) {
             System.out.println("-" + " " + purchase.getName() + "  $" + purchase.getCost());
+        }
+    }
+
+    // EFFECTS: saves category 1 to file
+    private void saveCategory1() {
+        try {
+            jsonWriterCategory1.open();
+            jsonWriterCategory1.write(category1);
+            jsonWriterCategory1.close();
+            System.out.println("Saved " + category1.getName() + " to " + JSON_STORE_CATEGORY_1);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE_CATEGORY_1);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads category 1 from file
+    private void loadCategory1() {
+        try {
+            category1 = jsonReaderCategory1.readCategory();
+            System.out.println("Loaded " + category1.getName() + " from " + JSON_STORE_CATEGORY_1);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE_CATEGORY_1);
+        }
+    }
+
+    // EFFECTS: saves category 2 to file
+    private void saveCategory2() {
+        try {
+            jsonWriterCategory2.open();
+            jsonWriterCategory2.write(category2);
+            jsonWriterCategory2.close();
+            System.out.println("Saved " + category2.getName() + " to " + JSON_STORE_CATEGORY_2);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE_CATEGORY_2);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads category 2 from file
+    private void loadCategory2() {
+        try {
+            category2 = jsonReaderCategory2.readCategory();
+            System.out.println("Loaded " + category2.getName() + " from " + JSON_STORE_CATEGORY_2);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE_CATEGORY_2);
+        }
+    }
+
+    // EFFECTS: saves category 3 to file
+    private void saveCategory3() {
+        try {
+            jsonWriterCategory3.open();
+            jsonWriterCategory3.write(category3);
+            jsonWriterCategory3.close();
+            System.out.println("Saved " + category3.getName() + " to " + JSON_STORE_CATEGORY_3);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE_CATEGORY_3);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads category 3 from file
+    private void loadCategory3() {
+        try {
+            category3 = jsonReaderCategory3.readCategory();
+            System.out.println("Loaded " + category3.getName() + " from " + JSON_STORE_CATEGORY_3);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE_CATEGORY_3);
+        }
+    }
+
+    // EFFECTS: saves the user to file
+    private void saveUser() {
+        try {
+            jsonWriterUser.open();
+            jsonWriterUser.write(mainUser);
+            jsonWriterUser.close();
+            System.out.println("Saved " + mainUser.getName() + " to " + JSON_STORE_USER);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE_USER);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads user from file
+    private void loadUser() {
+        try {
+            mainUser = jsonReaderUser.readUser();
+            System.out.println("Loaded " + mainUser.getName() + " from " + JSON_STORE_USER);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE_USER);
         }
     }
 }

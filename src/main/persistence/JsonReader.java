@@ -1,6 +1,7 @@
 package persistence;
 
 import model.Category;
+import model.Purchase;
 import model.User;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -23,25 +24,25 @@ public class JsonReader {
 
     // EFFECTS: reads category from file and returns it;
     // throws IOException if an error occurs reading data from file
-    public Category read() throws IOException {
+    public Category readCategory() throws IOException {
         String jsonData = readFile(source);
         JSONObject jsonObject = new JSONObject(jsonData);
-        return parseWorkRoom(jsonObject);
+        return parseCategory(jsonObject);
     }
 
     // EFFECTS: reads user from file and returns it;
     // throws IOException if an error occurs reading data from file
-    public User read() throws IOException {
+    public User readUser() throws IOException {
         String jsonData = readFile(source);
         JSONObject jsonObject = new JSONObject(jsonData);
-        return parseWorkRoom(jsonObject);
+        return parseUser(jsonObject);
     }
 
     // EFFECTS: reads source file as string and returns it
     private String readFile(String source) throws IOException {
         StringBuilder contentBuilder = new StringBuilder();
 
-        try (Stream<String> stream = Files.lines( Paths.get(source), StandardCharsets.UTF_8)) {
+        try (Stream<String> stream = Files.lines(Paths.get(source), StandardCharsets.UTF_8)) {
             stream.forEach(s -> contentBuilder.append(s));
         }
 
@@ -49,56 +50,60 @@ public class JsonReader {
     }
 
     // EFFECTS: parses category from JSON object and returns it
-    private Category parseWorkRoom(JSONObject jsonObject) {
+    private Category parseCategory(JSONObject jsonObject) {
         String name = jsonObject.getString("name");
-        WorkRoom wr = new WorkRoom(name);
-        addThingies(wr, jsonObject);
-        return wr;
+        int percent = jsonObject.getInt("percent");
+        Category category = new Category(name, percent);
+        addPurchasesCategory(category, jsonObject);
+        return category;
     }
 
     // EFFECTS: parses user from JSON object and returns it
-    private User parseWorkRoom(JSONObject jsonObject) {
+    private User parseUser(JSONObject jsonObject) {
         String name = jsonObject.getString("name");
-        WorkRoom wr = new WorkRoom(name);
-        addThingies(wr, jsonObject);
-        return wr;
+        double income = jsonObject.getDouble("income");
+        User user = new User(income, name);
+        addUser(user, jsonObject);
+        return user;
     }
 
-    // MODIFIES: wr
+    // MODIFIES: category
     // EFFECTS: parses thingies from JSON object and adds them to Category
-    private void addThingiesCategory(WorkRoom wr, JSONObject jsonObject) {
-        JSONArray jsonArray = jsonObject.getJSONArray("thingies");
+    private void addPurchasesCategory(Category category, JSONObject jsonObject) {
+        JSONArray jsonArray = jsonObject.getJSONArray("listPurchases");
         for (Object json : jsonArray) {
-            JSONObject nextThingy = (JSONObject) json;
-            addThingy(wr, nextThingy);
+            JSONObject nextPurchase = (JSONObject) json;
+            addPurchaseCategory(category, nextPurchase);
         }
     }
 
-    // MODIFIES: wr
-    // EFFECTS: parses thingies from JSON object and adds them to user
-    private void addThingiesUser(WorkRoom wr, JSONObject jsonObject) {
-        JSONArray jsonArray = jsonObject.getJSONArray("thingies");
-        for (Object json : jsonArray) {
-            JSONObject nextThingy = (JSONObject) json;
-            addThingy(wr, nextThingy);
-        }
-    }
+//    // MODIFIES: wr
+//    // EFFECTS: parses thingies from JSON object and adds them to user
+//    private void addThingiesUser(User user, JSONObject jsonObject) {
+//        JSONArray jsonArray = jsonObject.getJSONArray("thingies");
+//        for (Object json : jsonArray) {
+//            JSONObject nextThingy = (JSONObject) json;
+//            addThingyUser(wr, nextThingy);
+//        }
+//    }
 
-    // MODIFIES: wr
+    // MODIFIES: category
     // EFFECTS: parses thingy from JSON object and adds it to category
-    private void addThingyCategory(WorkRoom wr, JSONObject jsonObject) {
+    private void addPurchaseCategory(Category category, JSONObject jsonObject) {
         String name = jsonObject.getString("name");
-        Category category = Category.valueOf(jsonObject.getString("category"));
-        Thingy thingy = new Thingy(name, category);
-        wr.addThingy(thingy);
+        double cost = jsonObject.getDouble("cost");
+        //Category category = Category.valueOf(jsonObject.getString("category"));
+        Purchase purchase = new Purchase(name, cost);
+        category.addPurchase(purchase);
     }
 
-    // MODIFIES: wr
+    // MODIFIES: user
     // EFFECTS: parses thingy from JSON object and adds it to user
-    private void addThingyUser(WorkRoom wr, JSONObject jsonObject) {
+    private void addUser(User wr, JSONObject jsonObject) {
         String name = jsonObject.getString("name");
-        Category category = Category.valueOf(jsonObject.getString("category"));
-        Thingy thingy = new Thingy(name, category);
-        wr.addThingy(thingy);
+        double income = jsonObject.getDouble("income");
+        //Category category = Category.valueOf(jsonObject.getString("category"));
+        User user = new User(income, name);
+        //user.addThingy(thingy);
     }
 }

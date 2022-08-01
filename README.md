@@ -23,5 +23,5 @@ weekly, and monthly spending.
 - As a user, I want to be able to be able to set up a user profile with my name and my budget 
 
 *Phase 2*:
-- As a user, I want to be able to be able to save my budget preferences to file
-- As a user, I want to be able to load my budget preferences from file 
+- As a user, I want to be able to be able to save my purchases added to categories to file
+- As a user, I want to be able to load my purchases added to categories from file 
