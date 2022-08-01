@@ -10,4 +10,9 @@ public class JsonTest {
         assertEquals(name, purchase.getName());
         assertEquals(cost, purchase.getCost());
     }
+
+    protected void checkCategory(String name, int percent, Category category) {
+        assertEquals(name, category.getName());
+        assertEquals(percent, category.getPercent());
+    }
 }

@@ -1,11 +1,15 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 import java.util.List;
 
 // Represents a pie graph containing a list of categories and stats about each
 // category and cumulative stats
-public class Graph {
+public class Graph implements Writable {
 
     private List<Category> categoryList;
     private double ultimateSpent;
@@ -68,5 +72,23 @@ public class Graph {
 
     public List<Category> getCategoryList() {
         return categoryList;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("ultimateSpent", ultimateSpent);
+        json.put("categoryList", categoriesToJson());
+        return json;
+    }
+
+    // EFFECTS: returns categories in graph as a JSON array
+    private JSONArray categoriesToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Category c : categoryList) {
+            jsonArray.put(c.toJson());
+        }
+        return jsonArray;
     }
 }

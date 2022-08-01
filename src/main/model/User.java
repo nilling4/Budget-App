@@ -62,10 +62,10 @@ public class User implements Writable {
         return json;
     }
 
-    // EFFECTS: returns things in this category as a JSON array
-    private JSONArray userToJson() {
-        JSONArray jsonArray = new JSONArray();
-        jsonArray.put(this.toJson());
-        return jsonArray;
-    }
+//    // EFFECTS: returns things in this category as a JSON array
+//    private JSONArray userToJson() {
+//        JSONArray jsonArray = new JSONArray();
+//        jsonArray.put(this.toJson());
+//        return jsonArray;
+//    }
 }

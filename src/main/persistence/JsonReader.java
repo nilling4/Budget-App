@@ -1,6 +1,7 @@
 package persistence;
 
 import model.Category;
+import model.Graph;
 import model.Purchase;
 import model.User;
 import org.json.JSONArray;
@@ -30,6 +31,14 @@ public class JsonReader {
         return parseCategory(jsonObject);
     }
 
+    // EFFECTS: reads graph from file and returns it;
+    // throws IOException if an error occurs reading data from file
+    public Graph readGraph() throws IOException {
+        String jsonData = readFile(source);
+        JSONObject jsonObject = new JSONObject(jsonData);
+        return parseGraph(jsonObject);
+    }
+
     // EFFECTS: reads user from file and returns it;
     // throws IOException if an error occurs reading data from file
     public User readUser() throws IOException {
@@ -52,10 +61,18 @@ public class JsonReader {
     // EFFECTS: parses category from JSON object and returns it
     private Category parseCategory(JSONObject jsonObject) {
         String name = jsonObject.getString("name");
-        //int percent = jsonObject.getInt("percent");
-        Category category = new Category(name, 0);
+        int percent = jsonObject.getInt("percent");
+        Category category = new Category(name, percent);
         addPurchasesCategory(category, jsonObject);
         return category;
+    }
+
+    // EFFECTS: parses graph from JSON object and returns it
+    private Graph parseGraph(JSONObject jsonObject) {
+        double ultimateSpent = jsonObject.getDouble("ultimateSpent");
+        Graph graph = new Graph();
+        addCategoriesGraph(graph, jsonObject);
+        return graph;
     }
 
     // EFFECTS: parses user from JSON object and returns it
@@ -77,6 +94,16 @@ public class JsonReader {
         }
     }
 
+    // MODIFIES: category
+    // EFFECTS: parses thingies from JSON object and adds them to Category
+    private void addCategoriesGraph(Graph graph, JSONObject jsonObject) {
+        JSONArray jsonArray = jsonObject.getJSONArray("categoryList");
+        for (Object json : jsonArray) {
+            JSONObject nextCategory = (JSONObject) json;
+            addCategoryGraph(graph, nextCategory);
+        }
+    }
+
 //    // MODIFIES: wr
 //    // EFFECTS: parses thingies from JSON object and adds them to user
 //    private void addThingiesUser(User user, JSONObject jsonObject) {
@@ -92,9 +119,17 @@ public class JsonReader {
     private void addPurchaseCategory(Category category, JSONObject jsonObject) {
         String name = jsonObject.getString("name");
         double cost = jsonObject.getDouble("cost");
-        //Category category = Category.valueOf(jsonObject.getString("category"));
         Purchase purchase = new Purchase(name, cost);
         category.addPurchase(purchase);
+    }
+
+    // MODIFIES: category
+    // EFFECTS: parses thingy from JSON object and adds it to category
+    private void addCategoryGraph(Graph graph, JSONObject jsonObject) {
+        String name = jsonObject.getString("name");
+        int percent = jsonObject.getInt("percent");
+        Category category = new Category(name, percent);
+        graph.addCategory(category);
     }
 
     // MODIFIES: user

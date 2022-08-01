@@ -1,6 +1,7 @@
 package persistence;
 
 import model.Category;
+import model.Graph;
 import model.User;
 import org.json.JSONObject;
 
@@ -31,6 +32,13 @@ public class JsonWriter {
     // EFFECTS: writes JSON representation of category to file
     public void write(Category category) {
         JSONObject json = category.toJson();
+        saveToFile(json.toString(TAB));
+    }
+
+    // MODIFIES: this
+    // EFFECTS: writes JSON representation of graph to file
+    public void write(Graph graph) {
+        JSONObject json = graph.toJson();
         saveToFile(json.toString(TAB));
     }
 
