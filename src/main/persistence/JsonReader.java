@@ -52,8 +52,8 @@ public class JsonReader {
     // EFFECTS: parses category from JSON object and returns it
     private Category parseCategory(JSONObject jsonObject) {
         String name = jsonObject.getString("name");
-        int percent = jsonObject.getInt("percent");
-        Category category = new Category(name, percent);
+        //int percent = jsonObject.getInt("percent");
+        Category category = new Category(name, 0);
         addPurchasesCategory(category, jsonObject);
         return category;
     }

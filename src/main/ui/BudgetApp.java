@@ -97,7 +97,7 @@ public class BudgetApp {
             loadCategory1();
             loadCategory2();
             loadCategory3();
-            loadUser();
+            //loadUser();
         } else {
             System.out.println("Please select a valid option...");
         }

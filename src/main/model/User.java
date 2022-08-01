@@ -1,5 +1,6 @@
 package model;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import persistence.Writable;
 
@@ -59,5 +60,12 @@ public class User implements Writable {
         json.put("income", income);
         json.put("name", name);
         return json;
+    }
+
+    // EFFECTS: returns things in this category as a JSON array
+    private JSONArray userToJson() {
+        JSONArray jsonArray = new JSONArray();
+        jsonArray.put(this.toJson());
+        return jsonArray;
     }
 }
