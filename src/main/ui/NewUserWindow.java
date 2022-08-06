@@ -1,15 +1,18 @@
 package ui;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class NewUserWindow {
+public class NewUserWindow implements ActionListener {
 
     private JFrame frame;
     private JPanel panel;
     private JLabel nameLabel;
-    private JTextField nameText;
-    private JLabel incomeLabel;
     private JTextField incomeText;
+    private JLabel incomeLabel;
+    private JTextField nameText;
+    private JButton button;
 
     public NewUserWindow() {
         frameSetUp();
@@ -23,24 +26,25 @@ public class NewUserWindow {
         frame.add(panel);
 
         panel.setLayout(null);
-        nameTextSetUp();
         nameLabelSetUp();
         incomeLabelSetUp();
         incomeTextSetUp();
+        setNameText();
+        setButton();
 
         frame.setVisible(true);
+    }
+
+    public void setNameText() {
+        nameText = new JTextField(10);
+        nameText.setBounds(100, 20, 165, 25);
+        panel.add(nameText);
     }
 
     public void nameLabelSetUp() {
         nameLabel = new JLabel("User");
         nameLabel.setBounds(10, 20, 80, 25);
         panel.add(nameLabel);
-    }
-
-    public void nameTextSetUp() {
-        nameText = new JTextField(10);
-        nameText.setBounds(100, 20, 165, 25);
-        panel.add(nameText);
     }
 
     public void incomeLabelSetUp() {
@@ -51,9 +55,22 @@ public class NewUserWindow {
 
     public void incomeTextSetUp() {
         incomeText = new JTextField(20);
-        nameText.setBounds(100, 50, 165, 25);
+        incomeText.setBounds(100, 50, 165, 25);
         panel.add(incomeText);
     }
 
+    public void setButton() {
+        button = new JButton("Set");
+        button.setBounds(10, 80, 80, 25);
+        button.addActionListener(this);
+        panel.add(button);
+    }
 
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        String name = nameText.getText();
+        int income = Integer.parseInt(incomeText.getText());
+        System.out.println(name + " , " + income);
+    }
 }
