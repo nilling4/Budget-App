@@ -3,12 +3,12 @@ package ui;
 import javax.swing.*;
 import java.awt.*;
 
-public class NewWindow {
+public class SaveWindow {
 
     JFrame frame = new JFrame();
     JLabel label = new JLabel("Hello!");
 
-    NewWindow() {
+    SaveWindow() {
 
         label.setBounds(0, 0, 100, 50);
         label.setFont(new Font(null, Font.PLAIN, 25));

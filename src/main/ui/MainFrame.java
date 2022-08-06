@@ -8,18 +8,18 @@ import java.awt.event.ActionListener;
 
 public class MainFrame implements ActionListener {
 
-    JFrame frame;
-    JTextField textField;
-    JButton[] optionButtons = new JButton[2];
-    JButton[] persistenceButtons = new JButton[2];
-    JButton categoryButton;
-    JButton saveButton;
-    JButton loadButton;
-    JButton userButton;
-    JPanel panel;
-    JLabel label;
+    private JFrame frame;
+    private JTextField textField;
+    private JButton[] optionButtons = new JButton[2];
+    private JButton[] persistenceButtons = new JButton[2];
+    private JButton categoryButton;
+    private JButton saveButton;
+    private JButton loadButton;
+    private JButton userButton;
+    private JPanel panel;
+    private JLabel label;
 
-    Font myFont = new Font("HelveticaNeue", Font.BOLD, 30);
+    private Font myFont = new Font("HelveticaNeue", Font.BOLD, 30);
 
     // main method
     @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
@@ -69,11 +69,6 @@ public class MainFrame implements ActionListener {
             persistenceButtons[i].setFocusable(false);
         }
 
-//        categoryButton.setBounds(200, 430, 145, 50);
-//        userButton.setBounds(200, 300, 145, 50);
-//        loadButton.setBounds(200, 100, 145, 50);
-//        saveButton.setBounds(200, 50, 145, 50);
-
         // Creating a panel to add buttons and
         // textfield and a layout
         panel = new JPanel();
@@ -92,7 +87,7 @@ public class MainFrame implements ActionListener {
         //panel.add(textField);
         panel.setVisible(true);
 
-        panel.setBackground(Color.BLUE);
+        panel.setBackground(Color.lightGray);
 
         frame.add(panel);
         frame.show();
@@ -108,17 +103,13 @@ public class MainFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == userButton) {
-            // frame.dispose();
-            NewWindow myWindow = new NewWindow();
+            UserWindow userWindow = new UserWindow();
         } else if (e.getSource() == categoryButton) {
-            // frame.dispose();
-            NewWindow myWindow = new NewWindow();
+            CategoriesWindow categoriesWindow = new CategoriesWindow();
         } else if (e.getSource() == saveButton) {
-            // frame.dispose();
-            NewWindow myWindow = new NewWindow();
+            SaveWindow saveWindow = new SaveWindow();
         } else if (e.getSource() == loadButton) {
-            // frame.dispose();
-            NewWindow myWindow = new NewWindow();
+            LoadWindow loadWindow = new LoadWindow();
         }
     }
 }
