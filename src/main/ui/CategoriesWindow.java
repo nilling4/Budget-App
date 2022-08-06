@@ -19,8 +19,9 @@ public class CategoriesWindow implements ActionListener {
     JButton buttonAdd;
     JComboBox comboBox;
     String[] categories = {"food", "fun", "transport"};
-    Object[] row;
+    String[] row;
     DefaultTableModel model;
+    String returnSelected;
 
     @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     CategoriesWindow() {
@@ -78,9 +79,9 @@ public class CategoriesWindow implements ActionListener {
         frame.add(comboBox);
 
         // create an array of objects to set the row data
-        row = new Object[3];
+        row = new String[3];
 
-        addButton();
+        selectPanel();
 
         frame.setSize(900,400);
         frame.setLocationRelativeTo(null);
@@ -93,10 +94,11 @@ public class CategoriesWindow implements ActionListener {
         comboBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String categoryName = (String) comboBox.getSelectedItem();
-                row[2] = categoryName;
+                String comboBoxSelectedItem = (String) comboBox.getSelectedItem();
+                row[2] = comboBoxSelectedItem;
             }
         });
+        addButton();
     }
 
     public void addButton() {
@@ -110,10 +112,11 @@ public class CategoriesWindow implements ActionListener {
                 row[1] = textCost.getText();
 
                 // add row to the model
-                selectPanel();
                 model.addRow(row);
+//                if (row[2] == null) {
+//                    selectPanel();
+//                }
             }
-
         });
     }
 

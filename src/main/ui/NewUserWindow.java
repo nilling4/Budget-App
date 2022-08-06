@@ -21,7 +21,7 @@ public class NewUserWindow implements ActionListener {
     public void frameSetUp() {
         frame = new JFrame("New User");
         panel = new JPanel();
-        frame.setSize(350, 300);
+        frame.setSize(300, 170);
         frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         frame.add(panel);
 
@@ -60,8 +60,8 @@ public class NewUserWindow implements ActionListener {
     }
 
     public void setButton() {
-        button = new JButton("Set");
-        button.setBounds(10, 80, 80, 25);
+        button = new JButton("Set User");
+        button.setBounds(10, 80, 110, 25);
         button.addActionListener(this);
         panel.add(button);
     }
