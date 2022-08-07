@@ -1,8 +1,14 @@
 package ui;
 
+import model.User;
+import persistence.JsonReader;
+import persistence.JsonWriter;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class NewUserWindow implements ActionListener {
 
@@ -13,6 +19,11 @@ public class NewUserWindow implements ActionListener {
     private JLabel incomeLabel;
     private JTextField nameText;
     private JButton button;
+    private User newUser;
+    private JLabel message;
+    private JsonWriter jsonWriterUser;
+    private JsonReader jsonReaderUser;
+    private static final String JSON_STORE_USER = "./data/user.json";
 
     public NewUserWindow() {
         frameSetUp();
@@ -21,17 +32,16 @@ public class NewUserWindow implements ActionListener {
     public void frameSetUp() {
         frame = new JFrame("New User");
         panel = new JPanel();
-        frame.setSize(300, 170);
+        frame.setSize(300, 220);
         frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         frame.add(panel);
-
         panel.setLayout(null);
         nameLabelSetUp();
         incomeLabelSetUp();
         incomeTextSetUp();
         setNameText();
         setButton();
-
+        messageLabel();
         frame.setVisible(true);
     }
 
@@ -66,11 +76,52 @@ public class NewUserWindow implements ActionListener {
         panel.add(button);
     }
 
+    public String getName() {
+        return nameLabel.getText();
+    }
+
+    public double getIncome() {
+        return Double.parseDouble(incomeText.getText());
+    }
+
+    public void messageLabel() {
+        message = new JLabel("");
+        message.setBounds(10, 120, 200, 25);
+        panel.add(message);
+    }
+
+    // EFFECTS: saves the user to file
+    public void saveUser() {
+        jsonWriterUser = new JsonWriter(JSON_STORE_USER);
+        try {
+            jsonWriterUser.open();
+            jsonWriterUser.write(newUser);
+            jsonWriterUser.close();
+            System.out.println("Saved " + newUser.getName() + " to " + JSON_STORE_USER);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE_USER);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads user from file
+    public void loadUser() {
+        jsonReaderUser = new JsonReader(JSON_STORE_USER);
+        try {
+            newUser = jsonReaderUser.readUser();
+            System.out.println("Loaded " + newUser.getName() + " from " + JSON_STORE_USER);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE_USER);
+        }
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         String name = nameText.getText();
-        int income = Integer.parseInt(incomeText.getText());
+        double income = Double.parseDouble(incomeText.getText());
+        newUser = new User(income, name);
         System.out.println(name + " , " + income);
+
+        message.setText("User: " + name + "         Income: " + income);
     }
 }

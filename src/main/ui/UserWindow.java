@@ -9,12 +9,14 @@ import java.awt.event.ActionListener;
 public class UserWindow implements ActionListener {
 
     private JFrame frame;
-    private JLabel label;
+    private JLabel selectLabel;
+    private JLabel userLabel;
     private JPanel panel;
     private JButton[] userButtons = new JButton[3];
     private JButton newUserButton;
     private JButton increaseButton;
     private JButton decreaseButton;
+    private NewUserWindow newUserWindow;
 
     private Font font = new Font("HelveticaNeue", Font.BOLD, 30);
 
@@ -26,9 +28,10 @@ public class UserWindow implements ActionListener {
         frame.setSize(600, 450);
         frame.setVisible(true);
 
-        label = new JLabel("Select one of the following.");
-        label.setFont(font);
-        label.setAlignmentX(Component.CENTER_ALIGNMENT);
+        selectLabel = new JLabel("Select one of the following.");
+
+        selectLabel.setFont(font);
+        selectLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         newUserButton = new JButton("New User");
         increaseButton = new JButton("Increase budget");
@@ -51,9 +54,11 @@ public class UserWindow implements ActionListener {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setBorder(new EmptyBorder(new Insets(10, 80, 50, 80)));
         panel.setBackground(Color.lightGray);
-
-        panel.add(label);
-        panel.add(Box.createRigidArea(new Dimension(0, 100)));
+        panel.add(selectLabel);
+//        setLabel();
+//        panel.add(Box.createRigidArea(new Dimension(0, 100)));
+//        panel.add(userLabel);
+        panel.add(Box.createRigidArea(new Dimension(0, 10)));
         panel.add(newUserButton);
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
         panel.add(increaseButton);
@@ -62,15 +67,21 @@ public class UserWindow implements ActionListener {
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
 
         panel.setVisible(true);
-
         frame.add(panel);
     }
+
+//    public void setLabel() {
+//        userLabel = new JLabel("");
+//        userLabel.setFont(font);
+//        userLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+//
+//    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
 
         if (e.getSource() == newUserButton) {
-            NewUserWindow newUserWindow = new NewUserWindow();
+            newUserWindow = new NewUserWindow();
         } else if (e.getSource() == increaseButton) {
             IncreaseWindow increaseWindow = new IncreaseWindow();
         } else if (e.getSource() == decreaseButton) {

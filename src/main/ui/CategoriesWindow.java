@@ -1,5 +1,9 @@
 package ui;
 
+import model.Category;
+import model.Graph;
+import model.Purchase;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -21,7 +25,13 @@ public class CategoriesWindow implements ActionListener {
     String[] categories = {"food", "fun", "transport"};
     String[] row;
     DefaultTableModel model;
-    String returnSelected;
+    private Purchase purchase;
+    private String comboBoxSelectedItem;
+    private Category foodCategory = new Category("food", 0);
+    private Category funCategory = new Category("fun", 0);
+    private Category transportCategory = new Category("transport", 0);
+    private Graph mainGraph = new Graph();
+
 
     @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     CategoriesWindow() {
@@ -94,7 +104,7 @@ public class CategoriesWindow implements ActionListener {
         comboBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String comboBoxSelectedItem = (String) comboBox.getSelectedItem();
+                comboBoxSelectedItem = (String) comboBox.getSelectedItem();
                 row[2] = comboBoxSelectedItem;
             }
         });
@@ -113,9 +123,17 @@ public class CategoriesWindow implements ActionListener {
 
                 // add row to the model
                 model.addRow(row);
-//                if (row[2] == null) {
-//                    selectPanel();
-//                }
+                purchase = new Purchase(textName.getText(), Double.parseDouble(textCost.getText()));
+                mainGraph.addCategory(foodCategory);
+                mainGraph.addCategory(funCategory);
+                mainGraph.addCategory(transportCategory);
+                if (comboBoxSelectedItem == "food") {
+                    foodCategory.addPurchase(purchase);
+                } else if (comboBoxSelectedItem == "fun") {
+                    funCategory.addPurchase(purchase);
+                } else {
+                    transportCategory.addPurchase(purchase);
+                }
             }
         });
     }

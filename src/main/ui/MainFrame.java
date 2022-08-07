@@ -1,5 +1,7 @@
 package ui;
 
+import persistence.JsonReader;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -7,6 +9,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MainFrame implements ActionListener {
+
+    private static final String JSON_STORE_CATEGORY_1 = "./data/category1.json";
+    private static final String JSON_STORE_CATEGORY_2 = "./data/category2.json";
+    private static final String JSON_STORE_CATEGORY_3 = "./data/category3.json";
+    private static final String JSON_STORE_GRAPH = "./data/graph.json";
+    private static final String JSON_STORE_USER = "./data/user.json";
 
     private JFrame frame;
     private JTextField textField;
@@ -18,6 +26,8 @@ public class MainFrame implements ActionListener {
     private JButton userButton;
     private JPanel panel;
     private JLabel label;
+    private NewUserWindow newUserWindow;
+    private JsonReader jsonReaderUser;
 
     private Font myFont = new Font("HelveticaNeue", Font.BOLD, 30);
 
@@ -103,13 +113,14 @@ public class MainFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == userButton) {
-            UserWindow userWindow = new UserWindow();
+            newUserWindow = new NewUserWindow();
         } else if (e.getSource() == categoryButton) {
             CategoriesWindow categoriesWindow = new CategoriesWindow();
         } else if (e.getSource() == saveButton) {
-            SaveWindow saveWindow = new SaveWindow();
+            newUserWindow.saveUser();
         } else if (e.getSource() == loadButton) {
-            LoadWindow loadWindow = new LoadWindow();
+            jsonReaderUser = new JsonReader(JSON_STORE_USER);
+            newUserWindow.loadUser();
         }
     }
 }
