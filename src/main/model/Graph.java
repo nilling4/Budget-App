@@ -20,10 +20,6 @@ public class Graph implements Writable {
         this.ultimateSpent = ultimateSpent;
     }
 
-    public void setUltimateSpent(double ultimateSpent) {
-        this.ultimateSpent = ultimateSpent;
-    }
-
     // MODIFIES: this
     // EFFECTS: adds up amt spent in each category of graph
     public double determineUltimateSpent() {

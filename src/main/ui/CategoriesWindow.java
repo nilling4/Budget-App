@@ -10,10 +10,7 @@ import persistence.JsonWriter;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Objects;
@@ -60,6 +57,7 @@ public class CategoriesWindow implements ActionListener {
     private JButton calculateButton;
     private Font font;
     private JLabel ultimateLabel;
+    private double totalSpent;
 
 
 
@@ -125,7 +123,7 @@ public class CategoriesWindow implements ActionListener {
     }
 
     public void newObjects() {
-        frame = new JFrame();
+        frame = new JFrame("UniSave");
         table = new JTable();
         label = new JLabel("Select from an option below.");
         label.setBounds(0, 0, 100, 50);
@@ -231,9 +229,6 @@ public class CategoriesWindow implements ActionListener {
                 // add row to the model
                 model.addRow(row);
                 purchase = new Purchase(textName.getText(), Double.parseDouble(textCost.getText()));
-//                mainGraph.addCategory(foodCategory);
-//                mainGraph.addCategory(funCategory);
-//                mainGraph.addCategory(transportCategory);
                 if (Objects.equals(comboBoxSelectedItem, "food")) {
                     addFoodPurchase();
                 } else if (Objects.equals(comboBoxSelectedItem, "fun")) {
@@ -249,18 +244,21 @@ public class CategoriesWindow implements ActionListener {
         foodCategory.addPurchase(purchase);
         foodCategory.resetTotalSpent();
         foodCategory.updateCategory(mainUser);
+        totalSpent += purchase.getCost();
     }
 
     public void addFunPurchase() {
         funCategory.addPurchase(purchase);
         funCategory.resetTotalSpent();
         funCategory.updateCategory(mainUser);
+        totalSpent += purchase.getCost();
     }
 
     public void addTransportPurchase() {
         transportCategory.addPurchase(purchase);
         transportCategory.resetTotalSpent();
         transportCategory.updateCategory(mainUser);
+        totalSpent += purchase.getCost();
     }
 
     @Override
@@ -278,7 +276,8 @@ public class CategoriesWindow implements ActionListener {
         } else if (e.getSource() == calculateButton) {
             mainGraph.resetUltimateSpent();
             mainGraph.determineUltimateSpent();
-            String message = mainGraph.ultimateSpentMessage(mainUser);
+            String message = "You have spent " + totalSpent + " of your "
+                    + mainUser.getIncome() + " total dollars.";
             ultimateLabel.setText(message);
         }
     }
@@ -307,6 +306,7 @@ public class CategoriesWindow implements ActionListener {
 
             // add row to the model
             model.addRow(row);
+            totalSpent += purchase.getCost();
         }
     }
 
@@ -318,6 +318,7 @@ public class CategoriesWindow implements ActionListener {
 
             // add row to the model
             model.addRow(row);
+            totalSpent += purchase.getCost();
         }
     }
 
@@ -329,6 +330,7 @@ public class CategoriesWindow implements ActionListener {
 
             // add row to the model
             model.addRow(row);
+            totalSpent += purchase.getCost();
         }
     }
 
@@ -448,5 +450,6 @@ public class CategoriesWindow implements ActionListener {
             System.out.println("Unable to read from file: " + JSON_STORE_GRAPH);
         }
     }
+
 }
 
