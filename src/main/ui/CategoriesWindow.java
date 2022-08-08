@@ -18,7 +18,7 @@ import java.util.Objects;
 
 // Represents the CategoriesWindow that is opened when running application
 // class where you can add purchases items to categories, load/save files, create new user
-public class CategoriesWindow implements ActionListener {
+public class CategoriesWindow implements ActionListener, KeyListener {
 
     private static final String JSON_STORE_CATEGORY_1 = "./data/category1.json";
     private static final String JSON_STORE_CATEGORY_2 = "./data/category2.json";
@@ -147,6 +147,7 @@ public class CategoriesWindow implements ActionListener {
 
         textName = new JTextField();
         textCost = new JTextField();
+        textCost.addKeyListener(this);
 
         font = new Font("",1,22);
         mainUser = new User(0, "");
@@ -479,6 +480,37 @@ public class CategoriesWindow implements ActionListener {
             System.out.println("Unable to read from file: " + JSON_STORE_GRAPH);
         }
     }
+
+    // MODIFIES: this
+    // EFFECTS: enter key action listener
+    @Override
+    public void keyReleased(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+            row[0] = textName.getText();
+            row[1] = textCost.getText();
+
+            model.addRow(row);
+            purchase = new Purchase(textName.getText(), Double.parseDouble(textCost.getText()));
+            if (Objects.equals(comboBoxSelectedItem, "food")) {
+                addFoodPurchase();
+            } else if (Objects.equals(comboBoxSelectedItem, "fun")) {
+                addFunPurchase();
+            } else {
+                addTransportPurchase();
+            }
+        }
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+
+    }
+
 
 }
 

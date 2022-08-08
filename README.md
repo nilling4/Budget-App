@@ -25,3 +25,12 @@ weekly, and monthly spending.
 *Phase 2*:
 - As a user, I want to be able to be able to save my purchases added to categories to file
 - As a user, I want to be able to load my purchases added to categories from file 
+
+## Instructions for Grader
+- Open the application by running the CategoriesWindow class
+- When opening the application first click the user button and add a name and income and then press enter
+- You can generate the first required event by typing the name of a purchase in the first text field, a cost in the second text field, and selecting a category from the combo box, then clicking on the second text field and pressing the enter key on your keyboard. This adds a purchase to the selected category.
+- You can generate the second required event by clicking the calculate button. This shows the total amount spent on purchases. 
+- You can locate my visual component on the bottom right of the CategoriesWindow
+- You can save the state of my application by clicking the save button on the CategoriesWindow
+- You can reload the state of my application by clicking the load button on the CategoriesWindow and then the calculate button.
