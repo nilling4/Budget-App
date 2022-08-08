@@ -70,7 +70,7 @@ public class JsonReader {
     // EFFECTS: parses graph from JSON object and returns it
     private Graph parseGraph(JSONObject jsonObject) {
         double ultimateSpent = jsonObject.getDouble("ultimateSpent");
-        Graph graph = new Graph();
+        Graph graph = new Graph(ultimateSpent);
         addCategoriesGraph(graph, jsonObject);
         return graph;
     }

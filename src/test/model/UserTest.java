@@ -12,7 +12,7 @@ public class UserTest {
     @BeforeEach
     public void setUp() {
         noel = new User(100, "Noel");
-        testGraph = new Graph();
+        testGraph = new Graph((double) 0);
     }
 
     @Test

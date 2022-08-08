@@ -38,7 +38,7 @@ public class BudgetApp {
 
     // EFFECTS: constructs user and categories then runs the budget application
     public BudgetApp() throws FileNotFoundException {
-        mainGraph = new Graph();
+        mainGraph = new Graph(0.0);
         mainUser = new User(0, "unnamed");
         category1 = new Category("Food", 0);
         category2 = new Category("Transport", 0);

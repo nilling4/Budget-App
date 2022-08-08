@@ -15,9 +15,13 @@ public class Graph implements Writable {
     private double ultimateSpent;
 
     // EFFECTS: constructs a new graph with an empty list
-    public Graph() {
+    public Graph(Double ultimateSpent) {
         this.categoryList = new ArrayList<>();
-        this.ultimateSpent = 0;
+        this.ultimateSpent = ultimateSpent;
+    }
+
+    public void setUltimateSpent(double ultimateSpent) {
+        this.ultimateSpent = ultimateSpent;
     }
 
     // MODIFIES: this

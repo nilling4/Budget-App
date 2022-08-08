@@ -16,7 +16,7 @@ public class GraphTest {
 
     @BeforeEach
     public void setUp() {
-        testGraph = new Graph();
+        testGraph = new Graph(0.0);
         foodCategory = new Category("Food", 20);
         transportCategory = new Category("Transport", 30);
         hotDog = new Purchase("Hot Dog", 5);

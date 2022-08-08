@@ -19,7 +19,7 @@ class JsonWriterGraphTest extends JsonTest {
     @Test
     void testWriterInvalidFile() {
         try {
-            Graph graph = new Graph();
+            Graph graph = new Graph(0.0);
             JsonWriter writer = new JsonWriter("./data/my\0illegal:fileName.json");
             writer.open();
             fail("IOException was expected");
@@ -31,7 +31,7 @@ class JsonWriterGraphTest extends JsonTest {
     @Test
     void testWriterEmptyGraph() {
         try {
-            Graph graph = new Graph();
+            Graph graph = new Graph(0.0);
             JsonWriter writer = new JsonWriter("./data/testWriterEmptyGraph.json");
             writer.open();
             writer.write(graph);
@@ -49,7 +49,7 @@ class JsonWriterGraphTest extends JsonTest {
     @Test
     void testWriterGeneralGraph() {
         try {
-            Graph graph = new Graph();
+            Graph graph = new Graph(0.0);
             graph.addCategory(new Category("food", 0));
             graph.addCategory(new Category("transport", 0));
             JsonWriter writer = new JsonWriter("./data/testWriterGeneralGraph.json");
