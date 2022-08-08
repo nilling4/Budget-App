@@ -16,6 +16,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Objects;
 
 public class CategoriesWindow implements ActionListener {
     // make abstract class spring form that category and user use to make new items
@@ -61,23 +62,17 @@ public class CategoriesWindow implements ActionListener {
     private JLabel ultimateLabel;
 
 
+
     public static void main(String[] args) {
         CategoriesWindow categoriesWindow = new CategoriesWindow();
     }
 
     CategoriesWindow() {
         newObjects();
-        // set the model to the table
-        table.setModel(model);
-
-        // Change A JTable Background Color, Font Size, Font Color, Row Height
-        table.setBackground(Color.LIGHT_GRAY);
-        table.setForeground(Color.black);
-
-        table.setFont(font);
-        table.setRowHeight(30);
+        setTable();
 
         buttonSetUp();
+        setImage();
 
         frame.add(comboBox);
         textName.setBounds(20, 220, 100, 25);
@@ -104,6 +99,29 @@ public class CategoriesWindow implements ActionListener {
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         frame.setVisible(true);
+    }
+
+    public void setTable() {
+        // set the model to the table
+        table.setModel(model);
+
+        // Change A JTable Background Color, Font Size, Font Color, Row Height
+        table.setBackground(Color.LIGHT_GRAY);
+        table.setForeground(Color.black);
+
+        table.setFont(font);
+        table.setRowHeight(30);
+    }
+
+    public void setImage() {
+        ImageIcon budgetIcon = new ImageIcon(getClass().getResource("budget-icon-10.png"));
+        Image budgetImage = budgetIcon.getImage();
+        Image modifiedBudgetImage = budgetImage.getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+        budgetIcon = new ImageIcon(modifiedBudgetImage);
+
+        JLabel labelImage = new JLabel(budgetIcon);
+        frame.add(labelImage);
+        labelImage.setBounds(650, 175, 200, 200);
     }
 
     public void newObjects() {
@@ -216,9 +234,9 @@ public class CategoriesWindow implements ActionListener {
 //                mainGraph.addCategory(foodCategory);
 //                mainGraph.addCategory(funCategory);
 //                mainGraph.addCategory(transportCategory);
-                if (comboBoxSelectedItem == "food") {
+                if (Objects.equals(comboBoxSelectedItem, "food")) {
                     addFoodPurchase();
-                } else if (comboBoxSelectedItem == "fun") {
+                } else if (Objects.equals(comboBoxSelectedItem, "fun")) {
                     addFunPurchase();
                 } else {
                     addTransportPurchase();
