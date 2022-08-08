@@ -15,8 +15,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Objects;
 
+
+// Represents the CategoriesWindow that is opened when running application
+// class where you can add purchases items to categories, load/save files, create new user
 public class CategoriesWindow implements ActionListener {
-    // make abstract class spring form that category and user use to make new items
 
     private static final String JSON_STORE_CATEGORY_1 = "./data/category1.json";
     private static final String JSON_STORE_CATEGORY_2 = "./data/category2.json";
@@ -33,16 +35,16 @@ public class CategoriesWindow implements ActionListener {
     private JsonReader jsonReaderGraph;
     private JsonWriter jsonWriterUser;
     private JsonReader jsonReaderUser;
-    JFrame frame;
-    JTable table;
-    JLabel label;
-    JTextField textName;
-    JTextField textCost;
-    JButton buttonAdd;
-    JComboBox comboBox;
-    String[] categories = {"food", "fun", "transport"};
-    String[] row;
-    DefaultTableModel model;
+    private JFrame frame;
+    private JTable table;
+    private JLabel label;
+    private JTextField textName;
+    private JTextField textCost;
+    private JButton buttonAdd;
+    private JComboBox comboBox;
+    private String[] categories = {"food", "fun", "transport"};
+    private String[] row;
+    private DefaultTableModel model;
     private Purchase purchase;
     private String comboBoxSelectedItem;
     private Category foodCategory = new Category("food", 0);
@@ -60,11 +62,13 @@ public class CategoriesWindow implements ActionListener {
     private double totalSpent;
 
 
-
+    // EFFECTS: runs main window
     public static void main(String[] args) {
         CategoriesWindow categoriesWindow = new CategoriesWindow();
     }
 
+    // EFFECTS: creates a new categories window with a JScroll Pane, an array of Strings to set row data
+    // set frame size and adds JTextFields to JFrame
     CategoriesWindow() {
         newObjects();
         setTable();
@@ -77,19 +81,15 @@ public class CategoriesWindow implements ActionListener {
         textCost.setBounds(20, 250, 100, 25);
         comboBox.setBounds(20, 280, 100, 25);
 
-        // create JScrollPane
         JScrollPane pane = new JScrollPane(table);
         pane.setBounds(0, 0, 880, 200);
 
         frame.setLayout(null);
-
         frame.add(pane);
 
-        // add JTextFields to the jframe
         frame.add(textName);
         frame.add(textCost);
 
-        // create an array of objects to set the row data
         row = new String[3];
 
         selectPanel();
@@ -99,11 +99,12 @@ public class CategoriesWindow implements ActionListener {
         frame.setVisible(true);
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets the model to the table and changes the JTable background color, font size,
+    // color, and row height
     public void setTable() {
-        // set the model to the table
         table.setModel(model);
 
-        // Change A JTable Background Color, Font Size, Font Color, Row Height
         table.setBackground(Color.LIGHT_GRAY);
         table.setForeground(Color.black);
 
@@ -111,6 +112,8 @@ public class CategoriesWindow implements ActionListener {
         table.setRowHeight(30);
     }
 
+    // MODIFIES: this
+    // EFFECTS: adds/resize image to JFrame
     public void setImage() {
         ImageIcon budgetIcon = new ImageIcon(getClass().getResource("budget-icon-10.png"));
         Image budgetImage = budgetIcon.getImage();
@@ -122,6 +125,8 @@ public class CategoriesWindow implements ActionListener {
         labelImage.setBounds(650, 175, 200, 200);
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates new frames, table, labels, JComboBox, JTextFields, font, user
     public void newObjects() {
         frame = new JFrame("UniSave");
         table = new JTable();
@@ -134,15 +139,12 @@ public class CategoriesWindow implements ActionListener {
         mainGraph.addCategory(funCategory);
         mainGraph.addCategory(transportCategory);
 
-        // create JComboBox
         comboBox = new JComboBox(categories);
 
-        // create a table model and set a Column Identifiers to this model
         Object[] columns = {"Item Name","Cost", "Category"};
         model = new DefaultTableModel();
         model.setColumnIdentifiers(columns);
 
-        // create JTextFields
         textName = new JTextField();
         textCost = new JTextField();
 
@@ -150,6 +152,8 @@ public class CategoriesWindow implements ActionListener {
         mainUser = new User(0, "");
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates new Json objects
     public void setJson() {
         jsonWriterCategory1 = new JsonWriter(JSON_STORE_CATEGORY_1);
         jsonReaderCategory1 = new JsonReader(JSON_STORE_CATEGORY_1);
@@ -162,6 +166,8 @@ public class CategoriesWindow implements ActionListener {
 
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates new buttons and sets them to frame
     public void buttonSetUp() {
         // create JButtons
         buttonAdd = new JButton("Add");
@@ -191,6 +197,8 @@ public class CategoriesWindow implements ActionListener {
         calculateButton.addActionListener(this);
     }
 
+    // MODIFIES: this
+    // EFFECTS: action listener for JComboBox
     public void selectPanel() {
         comboBox.addActionListener(new ActionListener() {
             @Override
@@ -203,6 +211,8 @@ public class CategoriesWindow implements ActionListener {
 
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets up ultimate spent message
     public void setUltimateLabel() {
         mainGraph.resetUltimateSpent();
         mainGraph.determineUltimateSpent();
@@ -212,12 +222,16 @@ public class CategoriesWindow implements ActionListener {
         ultimateLabel.setBounds(410, 220, 300, 25);
     }
 
+
+    // MODIFIES: this
+    // EFFECTS: sets main user to given user
     public void setUser(User user) {
         mainUser = user;
     }
 
+    // MODIFIES: this
+    // EFFECTS: action listener for add button, adds Purchase field data to each row of JTable
     public void addButton() {
-        // button add row
         buttonAdd.addActionListener(new ActionListener() {
 
             @Override
@@ -226,7 +240,6 @@ public class CategoriesWindow implements ActionListener {
                 row[0] = textName.getText();
                 row[1] = textCost.getText();
 
-                // add row to the model
                 model.addRow(row);
                 purchase = new Purchase(textName.getText(), Double.parseDouble(textCost.getText()));
                 if (Objects.equals(comboBoxSelectedItem, "food")) {
@@ -240,6 +253,8 @@ public class CategoriesWindow implements ActionListener {
         });
     }
 
+    // MODIFIES: this
+    // EFFECTS: adds purchase to food category and updates total spent
     public void addFoodPurchase() {
         foodCategory.addPurchase(purchase);
         foodCategory.resetTotalSpent();
@@ -247,6 +262,8 @@ public class CategoriesWindow implements ActionListener {
         totalSpent += purchase.getCost();
     }
 
+    // MODIFIES: this
+    // EFFECTS: adds purchase to fun category and updates total spent
     public void addFunPurchase() {
         funCategory.addPurchase(purchase);
         funCategory.resetTotalSpent();
@@ -254,6 +271,8 @@ public class CategoriesWindow implements ActionListener {
         totalSpent += purchase.getCost();
     }
 
+    // MODIFIES: this
+    // EFFECTS: adds transport to food category and updates total spent
     public void addTransportPurchase() {
         transportCategory.addPurchase(purchase);
         transportCategory.resetTotalSpent();
@@ -261,6 +280,8 @@ public class CategoriesWindow implements ActionListener {
         totalSpent += purchase.getCost();
     }
 
+    // MODIFIES: this
+    // EFFECTS: button action listener for user, save, load, calculate
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == userButton) {
@@ -282,6 +303,7 @@ public class CategoriesWindow implements ActionListener {
         }
     }
 
+    // EFFECTS: save helper function
     public void save() {
         saveUser();
         saveFoodCategory();
@@ -290,6 +312,7 @@ public class CategoriesWindow implements ActionListener {
         saveGraph();
     }
 
+    // EFFECTS: load helper function
     public void load() {
         loadUser();
         loadFoodCategory();
@@ -298,6 +321,8 @@ public class CategoriesWindow implements ActionListener {
         loadGraph();
     }
 
+    // MODIFIES: this
+    // EFFECTS: adds food purchases to table
     public void loadTableFood() {
         for (Purchase purchase : foodCategory.getListPurchases()) {
             row[0] = purchase.getName();
@@ -310,6 +335,8 @@ public class CategoriesWindow implements ActionListener {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: adds fun purchases to table
     public void loadTableFun() {
         for (Purchase purchase : funCategory.getListPurchases()) {
             row[0] = purchase.getName();
@@ -322,6 +349,8 @@ public class CategoriesWindow implements ActionListener {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: adds transport purchases to table
     public void loadTableTransport() {
         for (Purchase purchase : transportCategory.getListPurchases()) {
             row[0] = purchase.getName();
@@ -359,7 +388,7 @@ public class CategoriesWindow implements ActionListener {
         }
     }
 
-    // EFFECTS: saves category 1 to file
+    // EFFECTS: saves food category to file
     private void saveFoodCategory() {
         try {
             jsonWriterCategory1.open();
@@ -372,7 +401,7 @@ public class CategoriesWindow implements ActionListener {
     }
 
     // MODIFIES: this
-    // EFFECTS: loads category 1 from file
+    // EFFECTS: loads food category from file
     private void loadFoodCategory() {
         try {
             foodCategory = jsonReaderCategory1.readCategory();
@@ -382,7 +411,7 @@ public class CategoriesWindow implements ActionListener {
         }
     }
 
-    // EFFECTS: saves category 2 to file
+    // EFFECTS: saves fun category to file
     private void saveFunCategory() {
         try {
             jsonWriterCategory2.open();
@@ -395,7 +424,7 @@ public class CategoriesWindow implements ActionListener {
     }
 
     // MODIFIES: this
-    // EFFECTS: loads category 2 from file
+    // EFFECTS: loads fun category from file
     private void loadFunCategory() {
         try {
             funCategory = jsonReaderCategory2.readCategory();
@@ -405,7 +434,7 @@ public class CategoriesWindow implements ActionListener {
         }
     }
 
-    // EFFECTS: saves category 3 to file
+    // EFFECTS: saves transport category to file
     private void saveTransportCategory() {
         try {
             jsonWriterCategory3.open();
@@ -418,7 +447,7 @@ public class CategoriesWindow implements ActionListener {
     }
 
     // MODIFIES: this
-    // EFFECTS: loads category 3 from file
+    // EFFECTS: loads transport category from file
     private void loadTransportCategory() {
         try {
             transportCategory = jsonReaderCategory3.readCategory();
