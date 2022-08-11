@@ -69,6 +69,7 @@ public class Category implements Writable {
     // EFFECTS: produces true if purchase successfully added to list
     public String addPurchase(Purchase purchase) {
         listPurchases.add(purchase);
+        EventLog.getInstance().logEvent(new Event(purchase.getName() + " was added to " + name + " Category"));
         return "Purchase successfully added.";
     }
 

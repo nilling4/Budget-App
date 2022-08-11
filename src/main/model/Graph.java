@@ -26,6 +26,7 @@ public class Graph implements Writable {
         for (Category category : this.categoryList) {
             this.ultimateSpent += category.getTotalSpent();
         }
+        EventLog.getInstance().logEvent(new Event("Calculate total cost of purchases added to list"));
         return ultimateSpent;
     }
 

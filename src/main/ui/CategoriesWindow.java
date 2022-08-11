@@ -1,9 +1,8 @@
 package ui;
 
-import model.Category;
-import model.Graph;
-import model.Purchase;
-import model.User;
+import model.*;
+import model.Event;
+import model.exception.LogException;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
@@ -62,6 +61,7 @@ public class CategoriesWindow implements ActionListener, KeyListener {
     private double totalSpent;
 
 
+
     // EFFECTS: runs main window
     public static void main(String[] args) {
         CategoriesWindow categoriesWindow = new CategoriesWindow();
@@ -69,7 +69,7 @@ public class CategoriesWindow implements ActionListener, KeyListener {
 
     // EFFECTS: creates a new categories window with a JScroll Pane, an array of Strings to set row data
     // set frame size and adds JTextFields to JFrame
-    CategoriesWindow() {
+    public CategoriesWindow() {
         newObjects();
         setTable();
 
@@ -89,6 +89,7 @@ public class CategoriesWindow implements ActionListener, KeyListener {
 
         frame.add(textName);
         frame.add(textCost);
+        setWindowClose();
 
         row = new String[3];
 
@@ -97,6 +98,54 @@ public class CategoriesWindow implements ActionListener, KeyListener {
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         frame.setVisible(true);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: prints out log event when closing window
+    public void setWindowClose() {
+        frame.addWindowListener(new WindowListener() {
+            @Override
+            public void windowOpened(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                printLog(EventLog.getInstance());
+            }
+
+            @Override
+            public void windowClosed(WindowEvent e) {}
+
+            @Override
+            public void windowIconified(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowActivated(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowDeactivated(WindowEvent e) {
+
+            }
+        });
+    }
+
+    // MODIFIES: this
+    // EFFECTS: sets the model to the table and changes the JTable background color, font size,
+    // color, and row height
+    public void printLog(EventLog el) {
+        for (Event next : el) {
+            System.out.println(next.toString());
+        }
     }
 
     // MODIFIES: this
@@ -243,13 +292,13 @@ public class CategoriesWindow implements ActionListener, KeyListener {
 
                 model.addRow(row);
                 purchase = new Purchase(textName.getText(), Double.parseDouble(textCost.getText()));
-                if (Objects.equals(comboBoxSelectedItem, "food")) {
-                    addFoodPurchase();
-                } else if (Objects.equals(comboBoxSelectedItem, "fun")) {
-                    addFunPurchase();
-                } else {
-                    addTransportPurchase();
-                }
+                    if (Objects.equals(comboBoxSelectedItem, "food")) {
+                        addFoodPurchase();
+                    } else if (Objects.equals(comboBoxSelectedItem, "fun")) {
+                        addFunPurchase();
+                    } else {
+                        addTransportPurchase();
+                    }
             }
         });
     }

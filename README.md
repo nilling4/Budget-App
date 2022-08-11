@@ -34,3 +34,18 @@ weekly, and monthly spending.
 - You can locate my visual component on the bottom right of the CategoriesWindow
 - You can save the state of my application by clicking the save button on the CategoriesWindow
 - You can reload the state of my application by clicking the load button on the CategoriesWindow and then the calculate button.
+
+## Phase 4: Task 2
+- Tue Aug 09 16:16:22 PDT 2022
+- Calculate total cost of purchases added to list
+- Tue Aug 09 16:16:30 PDT 2022
+- Burger was added to food Category
+- Tue Aug 09 16:16:41 PDT 2022
+- Bus Fare was added to transport Category
+- Tue Aug 09 16:16:52 PDT 2022
+- Ball was added to fun Category
+- Tue Aug 09 16:16:54 PDT 2022
+- Calculate total cost of purchases added to list
+
+## Phase 4: Task 2
+- 
