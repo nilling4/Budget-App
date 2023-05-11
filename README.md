@@ -1,3 +1,5 @@
+![](ezgif.com-video-to-gif.gif)
+
 # My Personal Project
 
 ## Monthly Budgeting app - UniSave
