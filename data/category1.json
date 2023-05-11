@@ -1,0 +1,10 @@
+{
+    "totalSpent": 0,
+    "listPurchases": [{
+        "cost": 15,
+        "name": "Burger"
+    }],
+    "name": "food",
+    "percent": 0,
+    "remainingMoney": 0
+}

@@ -1,0 +1,16 @@
+{
+    "totalSpent": 15,
+    "listPurchases": [
+        {
+            "cost": 5,
+            "name": "Ball"
+        },
+        {
+            "cost": 10,
+            "name": "Shirt"
+        }
+    ],
+    "name": "fun",
+    "percent": 0,
+    "remainingMoney": -15
+}

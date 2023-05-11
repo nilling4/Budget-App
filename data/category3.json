@@ -1,0 +1,16 @@
+{
+    "totalSpent": 0,
+    "listPurchases": [
+        {
+            "cost": 2,
+            "name": "Bus ticket"
+        },
+        {
+            "cost": 5,
+            "name": "Parking"
+        }
+    ],
+    "name": "transport",
+    "percent": 0,
+    "remainingMoney": 0
+}
