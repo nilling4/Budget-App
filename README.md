@@ -48,6 +48,3 @@ weekly, and monthly spending.
 - Ball was added to fun Category
 - Tue Aug 09 16:16:54 PDT 2022
 - Calculate total cost of purchases added to list
-
-## Phase 4: Task 2
-- 
